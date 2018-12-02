@@ -68,27 +68,36 @@ void Controller::listenning() {
     {
         if (!this->view->getOpenWindowFlag())break;
 
-        if (this->view->getFlagEventShow()) {
-
-            flag = this->file->send_message(this->view->getMessage());
+        if (this->view->getFlagEventShow())
+        {
+            flag=true;
 
             this->view->invertFlagEventShow();
         }
 
-        if (flag) {
-            this->file->write_message();
+        this->file->write_message();
 
             temp = this->file->getResponse();
 
-            if (temp != this->message) {
-                message = temp;
-
-                this->view->show((char *) temp.c_str());
-
+            if(temp=="request")
+            {
+                if(!flag)
+                {
+                    this->file->send_message((char*)"200");
+                }
+                else
+                    {
+                        this->file->send_message(this->view->getMessage());
+                    }
             }
+            /*else
+                {
+                    this->view->show((char *) temp.c_str());
+                }
+*/
+            flag = false;
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(600));
     }
 
-}
