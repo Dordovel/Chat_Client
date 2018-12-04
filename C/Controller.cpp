@@ -64,7 +64,7 @@ void Controller::listenning() {
     bool flag=false;
 
     while (true) {
-        if (!this->view->getOpenWindowFlag())break;
+        if (!this->view->getOpenWindowFlag())return;
 
         if ((flag = this->view->getFlagEventShow())) {
 

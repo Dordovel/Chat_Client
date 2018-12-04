@@ -26,25 +26,23 @@ public:
 int main (int argc, char **argv)
 {
 
-    Controller * controller=nullptr;
-
 #if(__linux__)
 
     if(!XInitThreads())return 0;
-
-        controller = new Controller(new View("../Uns.glade"),new Client("127.0.0.1",6000));
 
 #endif
 
 #if (_WIN32)
 
-    controller = new Controller(new View("../Uns.glade"),new Client("127.0.0.1",6000));
+  Controller* controller = new Controller(new View("../Uns.glade"),new Client((char*)"127.0.0.1",6000));
 
 #endif
 
-    if(controller) {
+    if(controller)
+    {
 
-        if (controller->connection()) {
+        if (controller->connection())
+        {
 
             pthread_t thread;
 
