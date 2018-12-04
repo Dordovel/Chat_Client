@@ -6,7 +6,11 @@
 
 #ifdef _WIN32
 
-Client::Client()=default;
+Client::Client(char * address,int port)
+{
+    this->port=port;
+    this->address=address;
+};
 
 bool Client::startClient()
 {
@@ -22,7 +26,7 @@ bool Client::startClient()
         {
             addr_in.sin_family = AF_INET;
             //inet_pton( AF_INET, "127.0.0.1", &( addr_in.sin_addr));
-            addr_in.sin_addr.S_un.S_addr=inet_addr("127.0.0.1");
+            addr_in.sin_addr.S_un.S_addr=inet_addr(address);
             addr_in.sin_port = htons( port );
 
             std::cout << "Client Start" << std::endl;

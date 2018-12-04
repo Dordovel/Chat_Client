@@ -10,6 +10,9 @@ class IClient
 {
 
 public:
+
+    virtual ~IClient(){};
+
     virtual bool connection()=0;
 
     virtual bool send_message(char *message)=0;

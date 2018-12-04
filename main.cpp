@@ -32,13 +32,13 @@ int main (int argc, char **argv)
 
     if(!XInitThreads())return 0;
 
-        controller = new Controller(new View("../Uns.glade"),new Client);
+        controller = new Controller(new View("../Uns.glade"),new Client("127.0.0.1",6000));
 
 #endif
 
 #if (_WIN32)
 
-    controller = new Controller(new View("../Uns.glade"),new Client);
+    controller = new Controller(new View("../Uns.glade"),new Client("127.0.0.1",6000));
 
 #endif
 

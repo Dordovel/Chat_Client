@@ -33,7 +33,8 @@ class Client:public IClient
     WSAData data;
     SOCKET sock;
     sockaddr_in addr_in;
-    int port = 6000;
+    int port;
+    char* address;
     int sizeAddr_in = sizeof( addr_in );
     int sockID;
     hostent *host;
@@ -42,7 +43,7 @@ class Client:public IClient
     char buffer[20];
 
 public:
-    Client();
+    Client(char * address,int port);
     ~Client();
 
     bool connection() override;

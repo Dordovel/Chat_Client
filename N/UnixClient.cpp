@@ -6,7 +6,12 @@
 
 #ifdef  __linux__
 
-Client::Client()=default;
+Client::Client(char * address,int port)
+{
+    this->port=port;
+    this->address=address;
+};
+
 
 bool Client::startClient()
 {
@@ -20,7 +25,7 @@ bool Client::startClient()
         bzero(&addr_in,sizeAddr_in);
         std::cout<<"Socket invalid"<<std::endl;
 
-        host=gethostbyname("127.0.0.1");
+        host=gethostbyname(address);
 
         addr_in.sin_port=htons(port);
         addr_in.sin_family=AF_INET;
