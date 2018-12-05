@@ -93,7 +93,7 @@ void Controller::listenning() {
                 this->view->show((char *) temp.c_str());
             }
 
-            std::this_thread::sleep_for(std::chrono::milliseconds(300));
+            std::this_thread::sleep_for(std::chrono::milliseconds( 300 ));
         }
     }
 }
