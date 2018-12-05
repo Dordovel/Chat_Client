@@ -37,16 +37,6 @@ bool Client::startClient()
 
 bool Client::connection()
 {
-    std::cout<<"Binding"<<std::endl;
-
-    if((errorCode=bind(sockID,(struct sockaddr *)&addr_in,sizeAddr_in))<0)
-    {
-        return false;
-    }
-    else
-    {
-        std::cout << "Bind Ok" << std::endl;
-
         if ((errorCode=connect(sockID, (struct sockaddr *) &addr_in, sizeAddr_in) )< 0)
         {
             return false;
@@ -55,8 +45,6 @@ bool Client::connection()
         {
             std::cout << "Connection Ok" << std::endl;
         }
-    }
-
 
     return true;
 
