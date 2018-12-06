@@ -32,7 +32,7 @@ int main (int argc, char **argv)
 
 #endif
 
-  Controller* controller = new Controller(new View("./Uns.glade"),new Client((char*)"127.0.0.1",6000));
+  Controller* controller = new Controller(new View("../Uns.glade"),new Client((char*)"127.0.0.1",6000));
 
     if(controller)
     {

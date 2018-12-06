@@ -95,6 +95,29 @@ void Controller::listenning() {
 
             std::this_thread::sleep_for(std::chrono::milliseconds( 300 ));
         }
+         else
+            {
+                this->view->show((char*)"No response from server,Close Application? Yes/No");
+
+                while(true)
+                {
+
+                    if (this->view->getFlagEventShow())
+                    {
+                        if (!strcmp(this->view->getMessage(), (char*)"Yes"))
+                        {
+                            return;
+                        }
+
+                        else if (!strcmp(this->view->getMessage(),(char*) "No"))
+                        {
+                            break;
+                        }
+
+                    }
+                }
+            }
+
     }
 }
 

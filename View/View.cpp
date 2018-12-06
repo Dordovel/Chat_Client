@@ -34,6 +34,9 @@ View::View(std::string fileGladePath):p_tree_view(nullptr),
 View::~View()
 {
 
+    this->window->hide();
+    this->app->remove_window(*window);
+
     if(window!= nullptr)
     {
         delete window;
