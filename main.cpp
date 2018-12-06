@@ -37,25 +37,25 @@ int main (int argc, char **argv)
     if(controller)
     {
 
+        pthread_t thread;
+
+        pthread_attr_t attr;
+
+        pthread_attr_init(&attr);
+
+        pthread_create(&thread, &attr,
+                       Thread::a, controller);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(60));
+
+
         if (controller->connection())
         {
-
-            pthread_t thread;
-
-            pthread_attr_t attr;
-
-            pthread_attr_init(&attr);
-
-            pthread_create(&thread, &attr,
-                           Thread::a, controller);
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(60));
-
             controller->listenning();
-
-            delete controller;
         }
     }
+
+    delete controller;
 
     return 0;
 
