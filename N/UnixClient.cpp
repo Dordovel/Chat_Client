@@ -15,9 +15,9 @@ Client::Client(char * address,int port)
 
 bool Client::startClient()
 {
-    if((sockID=socket(AF_INET,SOCK_STREAM,0))<0)
+    if((sock=socket(AF_INET,SOCK_STREAM,0))<0)
     {
-        errorCode=sockID;
+        errorCode=sock;
         return false;
     }
     else
@@ -37,7 +37,7 @@ bool Client::startClient()
 
 bool Client::connection()
 {
-        if ((errorCode=connect(sockID, (struct sockaddr *) &addr_in, sizeAddr_in) )< 0)
+        if ((errorCode=connect(sock, (struct sockaddr *) &addr_in, sizeAddr_in) )< 0)
         {
             return false;
         }
@@ -58,30 +58,20 @@ bool Client::write_message()
     struct timeval tv;
 
     FD_ZERO(&set);
-    FD_SET(sockID, &set);
+    FD_SET(sock, &set);
 
     tv.tv_sec = 0;
     tv.tv_usec = 7000;
 
-    if (select(sockID + 1, &set, NULL, NULL, &tv)>0 && FD_ISSET(sockID,&set))
+    if (select(sock + 1, &set, NULL, NULL, &tv)>0 && FD_ISSET(sock,&set))
     {
-
-        if((iof=fcntl(sockID,F_GETFL,0)!=0))
+        if ((errorCode = recv(sock, buffer, 20, 0)) <= 0)
         {
-            fcntl(sockID, F_SETFL, iof, O_NONBLOCK);
+           return false;
         }
 
-            if ((errorCode = recv(sockID, buffer, 20, 0)) <= 0)
-            {
-                return false;
-            }
-
-        if(iof!=-1)
-        {
-            fcntl(sockID,F_SETFL,iof);
-        }
-
-    } else
+    }
+    else
      {
          return false;
     }
@@ -92,7 +82,7 @@ bool Client::write_message()
 
 bool Client::send_message(char * msg)
 {
-    return (errorCode=send(sockID,msg,20,0))>0;
+    return (errorCode=send(sock,msg,20,0))>0;
 }
 
 char * Client::getResponse()
@@ -103,6 +93,11 @@ char * Client::getResponse()
 long Client::getErrorCode()
 {
     return errorCode;
+}
+
+char* Client::getHostProperties()
+{
+    return host->h_name;
 }
 
 Client::~Client() {}

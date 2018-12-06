@@ -43,6 +43,8 @@ bool Controller::connection()
     {
         if(this->file->connection())
         {
+            this->view->show(this->file->getHostProperties());
+
             return true;
         }
         else
@@ -59,7 +61,8 @@ bool Controller::connection()
 
 }
 
-void Controller::listenning() {
+void Controller::listenning()
+{
     std::string temp;
     bool flag=false;
 
@@ -122,4 +125,3 @@ void Controller::listenning() {
 
     }
 }
-

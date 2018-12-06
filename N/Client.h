@@ -38,7 +38,6 @@ class Client:public IClient
     int port;
     char* address;
     int sizeAddr_in = sizeof( addr_in );
-    int sockID;
     hostent *host;
     long errorCode=0;
 
@@ -54,7 +53,7 @@ public:
     bool startClient() override;
     long getErrorCode() override;
     char* getResponse() override;
-
+    char* getHostProperties() override;
 };
 
 #endif //UNTITLED_CLIENT_H

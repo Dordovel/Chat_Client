@@ -25,6 +25,8 @@ public:
 
     virtual char* getResponse()=0;
 
+    virtual char* getHostProperties() =0;
+
 };
 
 

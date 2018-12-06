@@ -111,6 +111,12 @@ long Client::getErrorCode()
     return errorCode;
 }
 
+
+char* Client::getHostProperties()
+{
+    return host->h_name;
+}
+
 Client::~Client()
 {
     WSACleanup();
