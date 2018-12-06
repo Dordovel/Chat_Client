@@ -86,8 +86,6 @@ bool Client::write_message()
 
     if (select(sock + 1, &set, NULL, NULL, &tv) > 0)
     {
-        std::cout<<"Waiting to read"<<std::endl;
-
         if (SOCKET_ERROR == (recv(sock, buffer, 20, 0)))
         {
             errorCode = WSAGetLastError();

@@ -21,6 +21,8 @@
 #include <netdb.h>
 #include<sys/types.h>
 #include <strings.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 #define SOCKET int
 #define WSAData void*
