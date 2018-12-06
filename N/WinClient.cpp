@@ -73,29 +73,10 @@ bool Client::send_message(char * message)
 
 bool Client::write_message()
 {
-
-    fd_set set;
-
-    struct timeval tv;
-
-    FD_ZERO(&set);
-    FD_SET(sock, &set);
-
-    tv.tv_sec = 0;
-    tv.tv_usec = 7000;
-
-    if (select(sock + 1, &set, NULL, NULL, &tv) > 0)
-    {
-        std::cout<<"Waiting to read"<<std::endl;
-
         if (SOCKET_ERROR == (recv(sock, buffer, 20, 0)))
         {
             errorCode = WSAGetLastError();
             closesocket(sock);
-            return false;
-        }
-    } else
-        {
             return false;
         }
 
