@@ -50,9 +50,32 @@ bool Client::connection()
 
 }
 
-bool Client::write_message()
-{
-    return (errorCode=recv(sockID,buffer,20,0))>0;
+bool Client::write_message() {
+    fd_set set;
+
+    struct timeval tv;
+
+    FD_ZERO(&set);
+    FD_SET(sock, &set);
+
+    tv.tv_sec = 0;
+    tv.tv_usec = 7000;
+
+    if (select(sock + 1, &set, NULL, NULL, &tv) > 0)
+    {
+        std::cout << "Waiting to read" << std::endl;
+
+        if((errorCode = recv(sockID, buffer, 20, 0))<0)
+        {
+            return false;
+        }
+    } else
+     {
+         return false;
+    }
+
+    return true;
+
 }
 
 bool Client::send_message(char * msg)
