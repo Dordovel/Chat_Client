@@ -99,7 +99,7 @@ void Controller::listenning() {
             {
                 this->view->show((char*)"No response from server,Close Application? Yes/No");
 
-                while(true)
+                while(!this->file->write_message())
                 {
 
                     if (this->view->getFlagEventShow())
