@@ -100,6 +100,9 @@ char* Client::getHostProperties()
     return host->h_name;
 }
 
-Client::~Client() {}
+Client::~Client()
+{
+    close(sock);
+}
 
 #endif
