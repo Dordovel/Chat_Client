@@ -43,8 +43,6 @@ bool Controller::connection()
     {
         if(this->file->connection())
         {
-            this->view->show(this->file->getHostProperties());
-
             return true;
         }
         else
@@ -102,9 +100,9 @@ void Controller::listenning()
         }
          else
             {
-                this->view->show((char*)"No response from server,Close Application);
+                this->view->show((char*)"No response from server,Close Application");
 
-                std::this_thread::__sleep_for(std::chrono::seconds(20));
+                std::this_thread::__sleep_for(std::chrono::seconds(5),std::chrono::nanoseconds(0));
 
                return;
             }
