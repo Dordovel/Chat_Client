@@ -60,13 +60,25 @@ bool Client::connection()
 
 bool Client::write_message()
 {
-   if ((errorCode = recv(sock, buffer, 20, 0)) <= 0)
-   {
+    FD_ZERO(&set);
+    FD_SET(sock,&set);
 
-      return false;
-   }
+    time.tv_sec=10;
+
+        if(select(sock+1,&set,NULL,NULL,&time)>0)
+        {
+
+        if(FD_ISSET(sock,&set))
+        {
+            FD_CLR(sock, &set);
+
+            if ((errorCode = recv(sock, buffer, 20, 0)) <= 0)
+            {
+                return false;
+            }
+        }
+    }
     return true;
-
 }
 
 bool Client::send_message(char * msg)

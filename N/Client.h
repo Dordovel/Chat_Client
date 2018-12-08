@@ -43,6 +43,9 @@ class Client:public IClient
 
     char buffer[20];
 
+    fd_set set;
+    struct timeval time;
+
 public:
     Client(char * address,int port);
     ~Client();
