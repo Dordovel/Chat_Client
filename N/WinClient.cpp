@@ -73,12 +73,27 @@ bool Client::send_message(char * message)
 
 bool Client::write_message()
 {
-   if (SOCKET_ERROR == (recv(sock, buffer, 20, 0)))
-   {
-      errorCode = WSAGetLastError();
-      closesocket(sock);
-       return false;
-   }
+    FD_ZERO(&set);
+    FD_SET(sock,&set);
+
+    time.tv_sec=10;
+
+        if(select(sock+1,&set,NULL,NULL,&time)>0)
+        {
+
+            if (FD_ISSET(sock, &set))
+            {
+                FD_CLR(sock, &set);
+
+
+                if (SOCKET_ERROR == (recv(sock, buffer, 20, 0)))
+                {
+                    errorCode = WSAGetLastError();
+                    closesocket(sock);
+                    return false;
+                }
+            }
+        }
 
    return true;
 
