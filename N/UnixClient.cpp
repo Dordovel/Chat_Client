@@ -44,6 +44,7 @@ bool Client::connection()
         else
         {
             std::cout << "Connection Ok" << std::endl;
+
         }
 
     return true;
@@ -52,30 +53,11 @@ bool Client::connection()
 
 bool Client::write_message()
 {
-    fd_set set;
-    int iof;
+   if ((errorCode = recv(sock, buffer, 20, 0)) <= 0)
+   {
 
-    struct timeval tv;
-
-    FD_ZERO(&set);
-    FD_SET(sock, &set);
-
-    tv.tv_sec = 0;
-    tv.tv_usec = 7000;
-
-    if (select(sock + 1, &set, NULL, NULL, &tv)>0 && FD_ISSET(sock,&set))
-    {
-        if ((errorCode = recv(sock, buffer, 20, 0)) <= 0)
-        {
-           return false;
-        }
-
-    }
-    else
-     {
-         return false;
-    }
-
+      return false;
+   }
     return true;
 
 }
