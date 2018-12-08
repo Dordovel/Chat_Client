@@ -27,7 +27,7 @@ bool Client::startClient()
 
         host=gethostbyname(address);
 
-        if(!host)
+        if(host)
         {
             addr_in.sin_port = htons(port);
             addr_in.sin_family = AF_INET;
