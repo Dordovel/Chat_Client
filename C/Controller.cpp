@@ -59,7 +59,8 @@ bool Controller::connection()
 
 }
 
-void Controller::listenning() {
+void Controller::listenning()
+{
     std::string temp;
     bool flag=false;
 
@@ -75,6 +76,8 @@ void Controller::listenning() {
         if(this->file->write_message())
         {
             temp = this->file->getResponse();
+
+            std::cout<<temp<<std::endl;
 
             if (temp == "request")
             {
@@ -97,27 +100,12 @@ void Controller::listenning() {
         }
          else
             {
-                this->view->show((char*)"No response from server,Close Application? Yes/No");
+                this->view->show((char*)"No response from server,Close Application");
 
-                while(!this->file->write_message())
-                {
+                std::this_thread::__sleep_for(std::chrono::seconds(5),std::chrono::nanoseconds(0));
 
-                    if (this->view->getFlagEventShow())
-                    {
-                        if (!strcmp(this->view->getMessage(), (char*)"Yes"))
-                        {
-                            return;
-                        }
-
-                        else if (!strcmp(this->view->getMessage(),(char*) "No"))
-                        {
-                            break;
-                        }
-
-                    }
-                }
+               return;
             }
 
     }
 }
-

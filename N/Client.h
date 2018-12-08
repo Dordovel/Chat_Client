@@ -21,6 +21,8 @@
 #include <netdb.h>
 #include<sys/types.h>
 #include <strings.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 #define SOCKET int
 #define WSAData void*
@@ -36,11 +38,13 @@ class Client:public IClient
     int port;
     char* address;
     int sizeAddr_in = sizeof( addr_in );
-    int sockID;
     hostent *host;
     long errorCode=0;
 
     char buffer[20];
+
+    fd_set set;
+    struct timeval time;
 
 public:
     Client(char * address,int port);
@@ -52,7 +56,7 @@ public:
     bool startClient() override;
     long getErrorCode() override;
     char* getResponse() override;
-
+    char* getHostProperties() override;
 };
 
 #endif //UNTITLED_CLIENT_H

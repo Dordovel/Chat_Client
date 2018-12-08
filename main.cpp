@@ -36,7 +36,6 @@ int main (int argc, char **argv)
 
     if(controller)
     {
-
         pthread_t thread;
 
         pthread_attr_t attr;
@@ -52,11 +51,12 @@ int main (int argc, char **argv)
         if (controller->connection())
         {
             controller->listenning();
+
         }
     }
 
     delete controller;
 
-    return 0;
+    return EXIT_SUCCESS;
 
 }

@@ -15,9 +15,9 @@ Client::Client(char * address,int port)
 
 bool Client::startClient()
 {
-    if((sockID=socket(AF_INET,SOCK_STREAM,0))<0)
+    if((sock=socket(AF_INET,SOCK_STREAM,0))<0)
     {
-        errorCode=sockID;
+        errorCode=sock;
         return false;
     }
     else
@@ -27,9 +27,16 @@ bool Client::startClient()
 
         host=gethostbyname(address);
 
-        addr_in.sin_port=htons(port);
-        addr_in.sin_family=AF_INET;
-        bcopy((char*)host->h_addr,(char*)&addr_in.sin_addr.s_addr,host->h_length);
+        if(host)
+        {
+            addr_in.sin_port = htons(port);
+            addr_in.sin_family = AF_INET;
+            bcopy((char *) host->h_addr, (char *) &addr_in.sin_addr.s_addr, host->h_length);
+
+        } else
+            {
+            std::cout<<"Host not Found"<<std::endl;
+        }
 
     }
     return true;
@@ -37,13 +44,14 @@ bool Client::startClient()
 
 bool Client::connection()
 {
-        if ((errorCode=connect(sockID, (struct sockaddr *) &addr_in, sizeAddr_in) )< 0)
+        if ((errorCode=connect(sock, (struct sockaddr *) &addr_in, sizeAddr_in) )< 0)
         {
             return false;
         }
         else
         {
             std::cout << "Connection Ok" << std::endl;
+
         }
 
     return true;
@@ -52,18 +60,30 @@ bool Client::connection()
 
 bool Client::write_message()
 {
-        if((errorCode = recv(sockID, buffer, 20, 0)))
+    FD_ZERO(&set);
+    FD_SET(sock,&set);
+
+    time.tv_sec=10;
+
+        if(select(sock+1,&set,NULL,NULL,&time)>0)
         {
-            return false;
+
+        if(FD_ISSET(sock,&set))
+        {
+            FD_CLR(sock, &set);
+
+            if ((errorCode = recv(sock, buffer, 20, 0)) <= 0)
+            {
+                return false;
+            }
         }
-
+    }
     return true;
-
 }
 
 bool Client::send_message(char * msg)
 {
-    return (errorCode=send(sockID,msg,20,0))>0;
+    return (errorCode=send(sock,msg,20,0))>0;
 }
 
 char * Client::getResponse()
@@ -76,6 +96,14 @@ long Client::getErrorCode()
     return errorCode;
 }
 
-Client::~Client() {}
+char* Client::getHostProperties()
+{
+    return host->h_name;
+}
+
+Client::~Client()
+{
+    close(sock);
+}
 
 #endif
