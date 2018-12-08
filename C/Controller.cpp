@@ -102,25 +102,11 @@ void Controller::listenning()
         }
          else
             {
-                this->view->show((char*)"No response from server,Close Application? Yes/No");
+                this->view->show((char*)"No response from server,Close Application);
 
-                while(!this->file->write_message())
-                {
+                std::this_thread::__sleep_for(std::chrono::seconds(20));
 
-                    if (this->view->getFlagEventShow())
-                    {
-                        if (!strcmp(this->view->getMessage(), (char*)"Yes"))
-                        {
-                            return;
-                        }
-
-                        else if (!strcmp(this->view->getMessage(),(char*) "No"))
-                        {
-                            break;
-                        }
-
-                    }
-                }
+               return;
             }
 
     }

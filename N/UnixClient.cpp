@@ -27,9 +27,16 @@ bool Client::startClient()
 
         host=gethostbyname(address);
 
-        addr_in.sin_port=htons(port);
-        addr_in.sin_family=AF_INET;
-        bcopy((char*)host->h_addr,(char*)&addr_in.sin_addr.s_addr,host->h_length);
+        if(!host)
+        {
+            addr_in.sin_port = htons(port);
+            addr_in.sin_family = AF_INET;
+            bcopy((char *) host->h_addr, (char *) &addr_in.sin_addr.s_addr, host->h_length);
+
+        } else
+            {
+            std::cout<<"Host not Found"<<std::endl;
+        }
 
     }
     return true;
