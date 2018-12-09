@@ -77,8 +77,6 @@ bool Client::write_message()
                 {
                     return false;
                 }
-
-                std::cout<<buffer<<std::endl;
             }
     }
     return true;
