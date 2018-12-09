@@ -73,7 +73,7 @@ bool Client::write_message()
             {
                 FD_CLR(sock, &set);
 
-                if ((errorCode = recv(sock, buffer, buffer_size, 0)) <= 0)
+                if ((errorCode = recv(sock, buffer, MAX_SIZE, 0)) <= 0)
                 {
                     return false;
                 }
@@ -86,7 +86,7 @@ bool Client::write_message()
 
 bool Client::send_message(char * msg)
 {
-    return (errorCode=send(sock,msg, buffer_size,0))>0;
+    return (errorCode=send(sock,msg,MAX_SIZE,0))>0;
 }
 
 char * Client::getResponse()

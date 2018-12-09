@@ -5,9 +5,6 @@
 #ifndef UNTITLED_CLIENT_H
 #define UNTITLED_CLIENT_H
 
-#include <iostream>
-#include "../I/IClient.h"
-
 #ifdef _WIN32
 
 #include <WinSock2.h>
@@ -29,7 +26,10 @@
 
 #endif
 
-#define buffer_size 200
+#include <iostream>
+#include "../I/IClient.h"
+
+#define MAX_SIZE 200
 
 class Client:public IClient
 {
@@ -42,7 +42,7 @@ class Client:public IClient
     hostent *host;
     long errorCode=0;
 
-    char buffer[200];
+    char buffer[MAX_SIZE];
 
     fd_set set,write_set;
     struct timeval time;

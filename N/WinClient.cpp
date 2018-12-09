@@ -63,7 +63,7 @@ bool Client::connection()
 }
 bool Client::send_message(char * message)
 {
-    if (SOCKET_ERROR == (send(sock, message, buffer_size, 0)))
+    if (SOCKET_ERROR == (send(sock, message, MAX_SIZE, 0)))
     {
         errorCode = WSAGetLastError();
         closesocket(sock);
@@ -86,7 +86,7 @@ bool Client::write_message()
         {
             FD_CLR(sock, &set);
 
-            if (SOCKET_ERROR == (recv(sock, buffer, buffer_size, 0)))
+            if (SOCKET_ERROR == (recv(sock, buffer, MAX_SIZE, 0)))
             {
                 errorCode = WSAGetLastError();
                 closesocket(sock);
