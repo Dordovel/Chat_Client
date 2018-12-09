@@ -86,12 +86,15 @@ void Controller::listenning()
                 }
                 else
                     {
+
                     this->file->send_message(this->view->getMessage());
                 }
             }
             else
                 {
-                this->view->show((char *) temp.c_str());
+                    std::cout<<temp<<std::endl;
+
+                    this->view->show((char *) temp.c_str());
             }
 
             std::this_thread::sleep_for(std::chrono::milliseconds(300));

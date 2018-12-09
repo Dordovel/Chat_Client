@@ -29,6 +29,7 @@
 
 #endif
 
+#define buffer_size 200;
 
 class Client:public IClient
 {
@@ -41,7 +42,7 @@ class Client:public IClient
     hostent *host;
     long errorCode=0;
 
-    char buffer[20];
+    char buffer[200];
 
     fd_set set,write_set;
     struct timeval time;
