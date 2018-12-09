@@ -30,6 +30,7 @@ bool Client::startClient()
             addr_in.sin_port = htons( port );
 
             std::cout << "Client Start" << std::endl;
+
         }
 
     }
@@ -54,19 +55,18 @@ bool Client::connection()
         closesocket( sock );
         return false;
     }
+
     return true;
 }
-
 bool Client::send_message(char * message)
 {
-    if ( SOCKET_ERROR == ( send( sock, message, 20, 0 ) ) )
+    if (SOCKET_ERROR == (send(sock, message, 20, 0)))
     {
-        errorCode=WSAGetLastError();
-        closesocket( sock );
+        errorCode = WSAGetLastError();
+        closesocket(sock);
 
         return false;
     }
-
     return true;
 
 }
@@ -78,22 +78,21 @@ bool Client::write_message()
 
     time.tv_sec=10;
 
-        if(select(sock+1,&set,NULL,NULL,&time)>0)
+    if(select(sock+1,&set,NULL,NULL,&time)>0)
+    {
+
+        if (FD_ISSET(sock, &set))
         {
+            FD_CLR(sock, &set);
 
-            if (FD_ISSET(sock, &set))
+            if (SOCKET_ERROR == (recv(sock, buffer, 20, 0)))
             {
-                FD_CLR(sock, &set);
-
-
-                if (SOCKET_ERROR == (recv(sock, buffer, 20, 0)))
-                {
-                    errorCode = WSAGetLastError();
-                    closesocket(sock);
-                    return false;
-                }
+                errorCode = WSAGetLastError();
+                closesocket(sock);
+                return false;
             }
         }
+    }
 
    return true;
 

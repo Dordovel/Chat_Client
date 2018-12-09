@@ -62,7 +62,7 @@ bool Controller::connection()
 void Controller::listenning()
 {
     std::string temp;
-    bool flag=false;
+    bool flag;
 
     while (true)
     {
@@ -73,11 +73,11 @@ void Controller::listenning()
             this->view->invertFlagEventShow();
         }
 
-        if(this->file->write_message())
+        if (this->file->write_message())
         {
             temp = this->file->getResponse();
 
-            std::cout<<temp<<std::endl;
+            std::cout << temp << std::endl;
 
             if (temp == "request")
             {
@@ -90,22 +90,21 @@ void Controller::listenning()
                     {
                     this->file->send_message(this->view->getMessage());
                 }
-            } else
-
+            }
+            else
                 {
                 this->view->show((char *) temp.c_str());
             }
 
-            std::this_thread::sleep_for(std::chrono::milliseconds( 300 ));
+            std::this_thread::sleep_for(std::chrono::milliseconds(300));
         }
-         else
+        else
             {
-                this->view->show((char*)"No response from server,Close Application");
+            this->view->show((char *) "No response from server,Close Application");
 
-                std::this_thread::__sleep_for(std::chrono::seconds(5),std::chrono::nanoseconds(0));
+            std::this_thread::__sleep_for(std::chrono::seconds(5), std::chrono::nanoseconds(0));
 
-               return;
-            }
-
+            return;
+        }
     }
 }
