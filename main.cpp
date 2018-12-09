@@ -51,7 +51,6 @@ int main (int argc, char **argv)
         if (controller->connection())
         {
             controller->listenning();
-
         }
     }
 
