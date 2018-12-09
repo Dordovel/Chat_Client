@@ -29,7 +29,7 @@
 
 #endif
 
-#define buffer_size 200;
+#define buffer_size 200
 
 class Client:public IClient
 {
