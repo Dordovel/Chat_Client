@@ -10,6 +10,9 @@ Client::Client(char * address,int port)
 {
     this->port=port;
     this->address=address;
+
+    time.tv_sec=15;
+    time.tv_usec=0;
 };
 
 bool Client::startClient()
@@ -75,8 +78,6 @@ bool Client::write_message()
 {
     FD_ZERO(&set);
     FD_SET(sock,&set);
-
-    time.tv_sec=10;
 
     if(select(sock+1,&set,NULL,NULL,&time)>0)
     {

@@ -77,8 +77,6 @@ void Controller::listenning()
         {
             temp = this->file->getResponse();
 
-            std::cout << temp << std::endl;
-
             if (temp == "request")
             {
 

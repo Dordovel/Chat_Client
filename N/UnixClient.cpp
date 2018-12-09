@@ -10,6 +10,9 @@ Client::Client(char * address,int port)
 {
     this->port=port;
     this->address=address;
+
+    time.tv_sec=15;
+    time.tv_usec=0;
 };
 
 
@@ -63,20 +66,18 @@ bool Client::write_message()
     FD_ZERO(&set);
     FD_SET(sock,&set);
 
-    time.tv_sec=10;
-
         if(select(sock+1,&set,NULL,NULL,&time)>0)
         {
 
-        if(FD_ISSET(sock,&set))
-        {
-            FD_CLR(sock, &set);
-
-            if ((errorCode = recv(sock, buffer, 20, 0)) <= 0)
+            if(FD_ISSET(sock,&set))
             {
-                return false;
+                FD_CLR(sock, &set);
+
+                if ((errorCode = recv(sock, buffer, 20, 0)) <= 0)
+                {
+                    return false;
+                }
             }
-        }
     }
     return true;
 }
